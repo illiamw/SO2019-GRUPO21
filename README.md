@@ -72,39 +72,39 @@ Execução
 ### Gauss-Legendre
 Compilação
 ```bash
-gcc GlSeq.c -o GlSeq.o  -lm
+gcc GlParl.c -o GlParl.o  -lm
 ```
 Execução
 ```bash
-/usr/bin/time -f "%e" ./GlSeq.o < entrada_pi.txt > saida_pi.txt
+/usr/bin/time -f "%e" ./GlParl.o < entrada_pi.txt > saida_pi.txt
 ```
 ### Borwein
 Compilação
 ```bash
-gcc BorSeq.c -o BorSeq.o  -lm
+gcc BorParl.c -o BorParl.o  -lm
 ```
 Execução
 ```bash
-/usr/bin/time -f "\n%e" ./BorSeq.o < entrada_pi.txt > saida_pi.txt
+/usr/bin/time -f "\n%e" ./BorParl.o < entrada_pi.txt > saida_pi.txt
 ```
 
 ### Monte Carlo
 Compilação
 ```bash
-gcc MontSeq.c -o MontSeq.o  -lm
+gcc MontParl.c -o MontParl.o  -lm
 ```
 Execução
 ```bash
-/usr/bin/time -f "\n%e" ./MontSeq.o < entrada_pi.txt > saida_pi.txt
+/usr/bin/time -f "\n%e" ./MontParl.o < entrada_pi.txt > saida_pi.txt
 ```
 ### Black Scholes
 Compilação
 ```bash
-gcc BlackSeq.c -o BlackSeq.o  -lm
+gcc BlackParl.c -o BlackParl.o  -lm
 ```
 Execução
 ```bash
-/usr/bin/time -f "%e" ./BlackSeq.o < entrada_blackscholes.txt > saida_blackscholes.txt
+/usr/bin/time -f "%e" ./BlackParl.o < entrada_blackscholes.txt > saida_blackscholes.txt
 ```
 
 Obs: Comando '-lm' fixa as funções da biblioteca math.h
