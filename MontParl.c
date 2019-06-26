@@ -9,7 +9,7 @@
 #include <gmp.h>
 #include <pthread.h>
 
-int randomizar(int* r);//Função randomica com alta precisão de varabilidade
+int variar(int* r);//Função randomica com alta precisão de varabilidade
 void manageThreads(int itera, mpf_t *pi);//Função do calculo de PI
 void* monte_carlo_thread(void* corretos_void);//Função de paralelização
 
@@ -46,8 +46,8 @@ void* monte_carlo_thread(void* corretos_void) {
     //Função Monte Carlo, Chamada por cada thread
 	for (i = 0; i < ITERA/Nthreads; i++)
 	{
-		x = (double) randomizar(&r)/RANDOM_MAX;
-		y = (double) randomizar(&r)/RANDOM_MAX;
+		x = (double) variar(&r)/RANDOM_MAX;
+		y = (double) variar(&r)/RANDOM_MAX;
 		if(x*x+y*y < 1) {
 			*corretos += 1;
 		}
@@ -95,6 +95,6 @@ void manageThreads(int itera, mpf_t *pi) {
 }
 
 //função responsável por gerar um número pseudo-aleatório
-int randomizar(int* r){
+int variar(int* r){
 	return *r = (1103515245*(*r)+ 12345) % 0x80000000;
 }

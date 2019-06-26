@@ -35,7 +35,6 @@ int main() {
 
 
 void* a_Novo(void* arg_a) {
-    //mpf_t a, b, *prox_A;
     a_data *iDados;
     iDados =  (a_data*) arg_a;
     mpf_add(*(iDados->prox_A), *(iDados->a), *(iDados->b));
@@ -63,24 +62,42 @@ void t_Novo(mpf_t a, mpf_t prox_A, mpf_t t, mpf_t *prox_T, mpf_t *p, mpf_t aX) {
 }
 //Calcula numericamente o valor de PI
 void GlParl(int intN, mpf_t*pi){
+    //double a = 1;
+    //double b = sqrt(2)/2;
+    //double t = 0.25;
+    //double p = 1;
+
+    //double prox_A, prox_B, prox_T, aX;
+
+    //for(i = 0; i < intN; i++){
+        //prox_A = (a + b)/2;
+        //a = prox_A;
+        //b = prox_B;
+        //t = prox_T;
+    //}
+    //aX = (a + b)/2; //evita o uso de pow(a, 2) 
+    /////////////////////////////////
+    // Convertendo formula de Math >>> GMP
+    //
+    /////////////////////////////////
     //inicializações
     mpf_set_default_prec (pow(10, 5));
 
-    //double a = 1;
+    
     mpf_t a;
     mpf_init_set_d(a, 1.0);
-    //double b = sqrt(2)/2;
+    
     double raiz = sqrt(0.5);
     mpf_t b;
     mpf_init_set_d(b, raiz);
-    //double t = 0.25;
+    
     mpf_t t;
     mpf_init_set_d(t, 0.25);
-    //double p = 1;
+    
     mpf_t p;
     mpf_init_set_d(p, 1.0);
 
-    //double prox_A, prox_B, prox_T, aX;
+    
     mpf_t prox_A, prox_B, prox_T, aX;
     mpf_init(prox_A);
     mpf_init(prox_B);

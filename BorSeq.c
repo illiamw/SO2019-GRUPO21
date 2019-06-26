@@ -1,48 +1,105 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#define ERRO 1E-15
+#include <gmp.h>
 
-void BorSeq();
+void Borw(int n);
 
-
-int main() {
-    BorSeq();
-    return 0;
+void main(){
+    int n=100000;
+    Borw(n);
 }
 
+void Borw(int n){ 
 
-void BorSeq(){
-    int i,n=1000000000, conv = 0;
-    double a, b, p, pi, pi_ant;
-    double a_tmp, b_tmp, p_tmp;
+    //Variavies de Borwein Convergência quártica 
+    //double a, y;    
 
-    //scanf("%d", &n);
-    //Valores iniciais
-    a = sqrt(2.0);
-    b = 0.0;
-    p = 2.0 + sqrt(2.0);
-    conv = 0;
-    pi = 0.0;
+    //Iterações valor K somatórias
+    //int i=0;
 
-    //itera n vezes ou ate convergir para calcular pi
-    for (i = 0; (i < n) && (conv == 0); i++) {
-        pi_ant = pi;
+    //valores iniciais
+    //a = 2*pow((sqrt(2)-1),2);
+    
+    //y = sqrt(2)-1;
+    
 
-        a_tmp = ( sqrt(a) + (1 / sqrt(a)) ) / 2.0;
-        b_tmp = ( (1 + b) * sqrt(a) ) / (a + b);
-        p_tmp = ( (1 + a_tmp) * p * b_tmp) / (1 + b_tmp);
+    
+    //iterações 
+    //for(i=0;i<n-1;i++){
+    //    y = (1- pow( (1-pow(y,4)), 0.25)) / (1+ pow( (1-pow(y,4)), 0.25));
+    //    a = (a*pow( (1 + y), 4) - pow(2, ((2*i)+3) )*y*(1 + y + pow(y,2)));
+    //}   
+    
 
-        //Atualiza variaveis
-        a = a_tmp;
-        b = b_tmp;
-        p = p_tmp;
-        pi = p;
+    //return (1/a);
 
-        conv = (fabs(pi - pi_ant) < ERRO) ? 0 : 1;		//analisar a convergencia
+    /////////////////////////////////
+    // Convertendo formula de Math >>> GMP
+    //
+    /////////////////////////////////
+
+    //Ajustando a precisão da estrutura
+    mpf_set_default_prec(pow(10,5));
+
+    //Ponteiros correspondente as flutuantes do da biblioteca
+    mpf_t a, y;
+
+    //Setando os valores inicias de A0 e Y0
+    mpf_init_set_d(a, 2*pow((sqrt(2)-1),2));
+    mpf_init_set_d(y, sqrt(2)-1);
+
+    //Variaveis acumulativas para iteração
+    mpf_t a1, y1, a2, y2, a3;
+    mpf_init(a1);
+    mpf_init(y1);
+    mpf_init(a2);
+    mpf_init(y2);
+    mpf_init(a3);
+    int i;
+
+    //iteração correspondente a formula
+    for (i = 0; i < n-1; i++){
+
+        //Operações do Y
+        mpf_pow_ui(y1,y,4);
+        mpf_ui_sub(y1,1,y1);
+        mpf_sqrt(y1, y1);
+        mpf_sqrt(y1, y1);
+        mpf_add_ui(y2,y1,1);
+        mpf_ui_sub(y1,1,y1);        
+
+        mpf_div(y,y1,y2);
+
+        //Operações do A
+        mpf_add_ui(a1,y,1);
+        mpf_pow_ui(a1,a1,4);
+        mpf_mul(a1,a1,a);
+
+        mpf_mul_ui(a2,y,(pow(2, ((2*i)+3)) ));
+        mpf_pow_ui(a3,y,2);
+        mpf_add(a3, y, a3);
+        mpf_add_ui(a3,a3,1);
+        mpf_mul(a2, a2, a3);
+
+        mpf_sub(a, a1, a2);    
     }
 
-    //Retorna valor de pi
-    printf("\n%.6f",pi);
+    mpf_t pi;
+    mpf_init(pi);
+    mpf_ui_div(pi,1,a);
+
+    printf("%lf\n", mpf_get_d (pi));
+    
+    //Limpando memória
+
+    mpf_clear(a);
+    mpf_clear(y);
+    mpf_clear(a1);
+    mpf_clear(a2);
+    mpf_clear(a3);
+    mpf_clear(y1);
+    mpf_clear(y2);
+    mpf_clear(pi);
 
 }

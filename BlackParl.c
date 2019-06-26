@@ -7,12 +7,9 @@
 #define qnThreads 4
 #define RANDOM_MAX 	(0x80000000 - 1)	
 
-typedef int numero_randomico;
+typedef int num_r;
+num_r variar(num_r* r);
 
-//Gera o proximo numero pseudo-aleatorio e atualiza a variavel r
-numero_randomico randomize(numero_randomico* r){
-	return *r = (1103515245*(*r)+ 12345) % 0x80000000;
-}
 
 struct parametros {
 	double *S;
@@ -38,7 +35,7 @@ double stddev (double *trials, double mean, int tamVec) {
 }
 
 void* Bp_thread(void* argumentos) {
-	numero_randomico r1;
+	num_r r1;
 	data *my_data;
 	r1 = rand();
 	my_data =  (data *) argumentos;
@@ -50,7 +47,7 @@ void* Bp_thread(void* argumentos) {
 
     for (i = 0; i < (*(my_data->M))/qnThreads; i++)
 	{
-        double ran = (double) randomize(&r1)/RANDOM_MAX;
+        double ran = (double) variar(&r1)/RANDOM_MAX;
         //t = S*exp((r-1.0/2*o*o)*T + o*sqrt(T)*ran); 
 		t = (*(my_data->S))*exp(((*(my_data->r))-1.0/2*(*(my_data->o))*(*(my_data->o)))*(*(my_data->T)) + (*(my_data->o))*sqrt((*(my_data->T)))*ran); 
 		if(t-(*(my_data->E))>0) {
@@ -140,4 +137,9 @@ int main(){
 
 	Bp(S, E, r, o, T, M);
 	return 0;
+}
+
+//Gera o proximo numero pseudo-aleatorio e atualiza a variavel r
+num_r variar(num_r* r){
+	return *r = (1103515245*(*r)+ 12345) % 0x80000000;
 }

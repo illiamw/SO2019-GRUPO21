@@ -42,6 +42,34 @@ int main() {
 
 //data_Y é o produtor
 void* data_Y (void *arg_y) {
+
+    //Variavies de Borwein Convergência quártica 
+    //double a, y;    
+
+    //Iterações valor K somatórias
+    //int i=0;
+
+    //valores iniciais
+    //a = 2*pow((sqrt(2)-1),2);
+    
+    //y = sqrt(2)-1;
+    
+
+    
+    //iterações 
+    //for(i=0;i<n-1;i++){
+    //    y = (1- pow( (1-pow(y,4)), 0.25)) / (1+ pow( (1-pow(y,4)), 0.25));
+    //    a = (a*pow( (1 + y), 4) - pow(2, ((2*i)+3) )*y*(1 + y + pow(y,2)));
+    //}   
+    
+
+    //return (1/a);
+
+    /////////////////////////////////
+    // Convertendo formula de Math >>> GMP
+    //
+    /////////////////////////////////
+
     mpf_t aX_Y2, num, den;
     Y_param *my_data;
     my_data =  (Y_param *) arg_y;
@@ -49,7 +77,7 @@ void* data_Y (void *arg_y) {
     mpf_init(num);
     mpf_init(den);
    
-    //prox_Y = (1-pow((1-pow(y,4)),0.25))/(1+pow((1-pow(y,4)),0.25));
+    
       
     mpf_pow_ui(aX_Y2, *(my_data->y), 4);
     mpf_ui_sub (aX_Y2, 1, aX_Y2);
