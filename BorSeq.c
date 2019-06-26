@@ -39,7 +39,7 @@ void BorSeq(){
         p = p_tmp;
         pi = p;
 
-        conv = (fabs(pi - pi_ant) < ERRO) ? 1 : 0;		//analisar a convergencia
+        conv = (fabs(pi - pi_ant) < ERRO) ? 0 : 1;		//analisar a convergencia
     }
 
     //Retorna valor de pi

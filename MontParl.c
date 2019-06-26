@@ -1,5 +1,5 @@
 #define Nthreads 4
-#define itera 100000000 //número de iterações
+#define ITERA 1000000000 //número de ITERAções
 #define RANDOM_MAX 	(0x80000000 - 1) //Definindo valor 
 
 #include <stdio.h>
@@ -20,7 +20,7 @@ int main(int argc, char const *argv[])
     mpf_t pi;
     mpf_init(pi);
     
-    manageThreads(itera, &pi);
+    manageThreads(ITERA, &pi);
     printf("%lf\n", mpf_get_d (pi));
     mpf_clear(pi);
 
@@ -31,7 +31,7 @@ void* monte_carlo_thread(void* corretos_void) {
 	// Variaveis dos pontos no plano para o calculo de acertos
     double x;
 	double y;
-    //r - rand(), *corretos-numeros de acertos, i - iterações de loop
+    //r - rand(), *corretos-numeros de acertos, i - ITERAções de loop
     int r;
 	int *corretos;
 	int i;
@@ -44,7 +44,7 @@ void* monte_carlo_thread(void* corretos_void) {
     r = rand();	
 
     //Função Monte Carlo, Chamada por cada thread
-	for (i = 0; i < itera/Nthreads; i++)
+	for (i = 0; i < ITERA/Nthreads; i++)
 	{
 		x = (double) randomizar(&r)/RANDOM_MAX;
 		y = (double) randomizar(&r)/RANDOM_MAX;
@@ -59,7 +59,7 @@ void* monte_carlo_thread(void* corretos_void) {
 void manageThreads(int itera, mpf_t *pi) {
     //Zera a refrencia de time utilizado para gerar o numero randomico
 	srand(time(NULL));
-    //Variaveis iterativas
+    //Variaveis ITERAtivas
 	int i, corretos_total = 0;
 
     //Auxiliares da estrutura gmp
@@ -71,7 +71,7 @@ void manageThreads(int itera, mpf_t *pi) {
 	int corretos[Nthreads];
 
 	//Cria as threads 
-    // Parametros >>> pthread_create(id da thread, NULL (opção default), função a ser paralelizada, parametro de iteração viculada ao gerenciador de threads
+    // Parametros >>> pthread_create(id da thread, NULL (opção default), função a ser paralelizada, parametro de ITERAção viculada ao gerenciador de threads
 	for(i = 0; i < Nthreads; i++) {
 		pthread_create(&id_threads[i], NULL, monte_carlo_thread, &corretos[i]);
 	}
@@ -86,7 +86,7 @@ void manageThreads(int itera, mpf_t *pi) {
 		corretos_total += corretos[i];
 	}
 
-	//pi = 4.0*corretos/itera;
+	//pi = 4.0*corretos/ITERA;
 	mpf_set_d(aux, corretos_total);
 	mpf_mul_ui(aux, aux, 4.0);
 	mpf_div_ui(*pi, aux, itera);

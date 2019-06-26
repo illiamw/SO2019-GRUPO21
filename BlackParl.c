@@ -136,7 +136,7 @@ int main(){
 	printf("%.6lf\n", r);
 	printf("%.6lf\n", o);
 	printf("%.6lf\n", T);
-	printf("%.6lf\n", M);
+	printf("%d\n", M);
 
 	Bp(S, E, r, o, T, M);
 	return 0;

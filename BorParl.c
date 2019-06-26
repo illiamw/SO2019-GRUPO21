@@ -109,32 +109,22 @@ void* data_A (void *arg_a) {
 
  
 void BoParl(int intN, mpf_t *pi) {
-    //inicializações
+    //inicializações da precisão da estrutura mpf, posteriores
     mpf_set_default_prec (pow(10, 5));
 
-    //double a = 6-4*sqrt(2);
     double aX_A = 6-4*sqrt(2);
     mpf_t a;
     mpf_init_set_d(a, aX_A);
 
-    //double y = sqrt(2)-1;
     double aX_Y = sqrt(2)-1;
     mpf_t y;
     mpf_init_set_d(y, aX_Y);
 
-    //double prox_A, prox_Y; 
     mpf_t prox_A, prox_Y;
     mpf_init(prox_A);
     mpf_init(prox_Y);
      
     int i;
-    //double aux4;  
-    //mpf_t aX_Y2, num, den, aX_A2, aX_A3;
-    //mpf_init(aX_Y2);
-    //mpf_init(aX_A2);
-    //mpf_init(aX_A3);
-    //mpf_init(num);
-    //mpf_init(den);
     Y_param obj1;
     A_param obj2;
     pthread_t id1;
@@ -156,11 +146,8 @@ void BoParl(int intN, mpf_t *pi) {
         //printf("Iteração: %d\n", i);
  
         //Cria as threads
-        //prox_Y = (1-pow((1-pow(y,4)),0.25))/(1+pow((1-pow(y,4)),0.25));
-        //printf("hola");
 
         pthread_create(&id1, NULL, data_Y, &obj1);
-        //prox_A = a*pow((1+prox_Y),4)-pow(2,(2*i+3))*prox_Y*(1+prox_Y+prox_Y*prox_Y);
 
         pthread_create(&id2, NULL, data_A, &obj2);
 
